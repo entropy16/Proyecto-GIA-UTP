@@ -7,24 +7,19 @@ import lombok.NoArgsConstructor;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import java.util.Date;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Entity
-@Table(name = "PACIENTES")
-public class PacienteEntity {
+@Table(name = "PERSONAL")
+public class PersonalEntity {
 
     @Id
-    private Long cedulaPaciente;
+    private Long cedulaPersonal;
+    private String tipo;
     private String nombre;
     private String apellido;
-    private String estado;
+    private String departamento;
     private String telefono;
-    private String direccion;
-    private Date fechaNacimiento;
-    private String sexo;
-    private String eps;
-    private String estadoCivil;
 }

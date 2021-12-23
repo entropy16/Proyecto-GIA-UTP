@@ -4,21 +4,15 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class PacienteDTO {
+public class PersonalDTO {
 
-    private Long cedulaPaciente;
+    private Long cedulaPersonal;
+    private String tipo;
     private String nombre;
     private String apellido;
-    private String estado;
+    private String departamento;
     private String telefono;
-    private String direccion;
-    private Date fechaNacimiento;
-    private String sexo;
-    private String eps;
-    private String estadoCivil;
 }
