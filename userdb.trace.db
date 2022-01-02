@@ -1,0 +1,4 @@
+2021-12-28 13:49:36 jdbc[14]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Error de Sintaxis en sentencia SQL "SELECT * FROM REGISTROSHC PERSONAL PACIENTES[*]"
+Syntax error in SQL statement "SELECT * FROM REGISTROSHC PERSONAL PACIENTES[*]"; SQL statement:
+SELECT * FROM REGISTROSHC PERSONAL PACIENTES [42000-200]

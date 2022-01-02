@@ -26,7 +26,7 @@ public class PersonalController {
         return personalService.consultarPersonal(cedulaPersonal);
     }
 
-    @GetMapping("consultarPorTipo")
+    @GetMapping("consultarTipo")
     public List<PersonalDTO> consultarPorTipo(@RequestParam String tipo) throws NoExisteException {
         return personalService.consultarPorTipo(tipo);
     }

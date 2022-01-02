@@ -6,5 +6,6 @@ import org.springframework.data.repository.CrudRepository;
 import java.util.List;
 
 public interface PersonalRepository extends CrudRepository<PersonalEntity,Long> {
+
     List<PersonalEntity> findByTipo(String tipo);
 }
