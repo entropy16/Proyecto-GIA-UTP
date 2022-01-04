@@ -8,9 +8,9 @@ import java.util.List;
 
 public interface PacienteService {
 
-    PacienteDTO crearPaciente(PacienteDTO pacienteDTO) throws FaltaInfoException;
+    PacienteDTO crearPaciente(PacienteDTO pacienteDTO);
     PacienteDTO consultarPaciente(Long cedulaPaciente) throws NoExisteException;
-    PacienteDTO actualizarPaciente(PacienteDTO pacienteDTO) throws NoExisteException,FaltaInfoException;
+    PacienteDTO actualizarPaciente(PacienteDTO pacienteDTO) throws NoExisteException;
     PacienteDTO borrarPaciente(Long cedulaPaciente) throws NoExisteException;
     List<PacienteDTO> consultarEstado(String estado) throws NoExisteException;
 }

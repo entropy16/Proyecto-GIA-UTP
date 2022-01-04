@@ -15,7 +15,7 @@ public class RegistroHCDTO {
     private Date fechaRegistro;
     private Long cedulaPaciente;
     private String procedimiento;
-    private String descripción;
+    private String descripcion;
     private String tipoProcedimiento;
     private Long cedulaPersonal;
     private String estadoPaciente;

@@ -1,7 +1,6 @@
 package co.edu.utp.isc.gia.proyectoCrud.Controller;
 
 import co.edu.utp.isc.gia.proyectoCrud.DTO.PersonalDTO;
-import co.edu.utp.isc.gia.proyectoCrud.Exceptions.FaltaInfoException;
 import co.edu.utp.isc.gia.proyectoCrud.Exceptions.NoExisteException;
 import co.edu.utp.isc.gia.proyectoCrud.Service.PersonalService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,14 +15,16 @@ public class PersonalController {
     @Autowired
     public PersonalService personalService;
 
-    @PutMapping("crearPersonal")
-    public PersonalDTO crearPersonal(@RequestBody PersonalDTO personalDTO) throws FaltaInfoException {
-        return personalService.crearPersonal(personalDTO);
+    @PostMapping("crearPersonal")
+    public PersonalDTO crearPersonal(@RequestBody PersonalDTO personalDTO) {
+
+            return personalService.crearPersonal(personalDTO);
     }
 
     @GetMapping("consultarPersonal")
     public PersonalDTO consultarPersonal(@RequestParam Long cedulaPersonal) throws NoExisteException {
-        return personalService.consultarPersonal(cedulaPersonal);
+
+            return personalService.consultarPersonal(cedulaPersonal);
     }
 
     @GetMapping("consultarTipo")
@@ -33,7 +34,7 @@ public class PersonalController {
 
     @PutMapping("actualizarPersonal")
     public PersonalDTO actualizarPersonal(@RequestBody PersonalDTO personalDTO)
-            throws NoExisteException, FaltaInfoException{
+            throws NoExisteException{
         return personalService.actualizarPersonal(personalDTO);
     }
 

@@ -1,6 +1,5 @@
 package co.edu.utp.isc.gia.proyectoCrud.Entities;
 
-import co.edu.utp.isc.gia.proyectoCrud.DTO.PacienteDTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -22,15 +21,18 @@ public class RegistroHCEntity {
     @Temporal(TemporalType.DATE)
     private Date fechaRegistro;
 
-    @ManyToOne(fetch=FetchType.LAZY, cascade=CascadeType.ALL)
-    @JoinColumn(name="CEDULA_PACIENTE")
-    private PacienteDTO paciente;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "cedPac", foreignKey = @ForeignKey(name = "cedPac"))
+    public PacienteEntity paciente;
 
     private Long cedulaPaciente;
-
-    private String procedimiento;
-    private String descripción;
+    private String descripcion;
     private String tipoProcedimiento;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "cedPer", foreignKey = @ForeignKey(name = "cedPer"))
+    public PersonalEntity personal;
+
     private Long cedulaPersonal;
     private String estadoPaciente;
 }

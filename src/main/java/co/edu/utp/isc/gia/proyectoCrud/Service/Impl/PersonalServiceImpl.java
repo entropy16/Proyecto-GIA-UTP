@@ -2,7 +2,6 @@ package co.edu.utp.isc.gia.proyectoCrud.Service.Impl;
 
 import co.edu.utp.isc.gia.proyectoCrud.DTO.PersonalDTO;
 import co.edu.utp.isc.gia.proyectoCrud.Entities.PersonalEntity;
-import co.edu.utp.isc.gia.proyectoCrud.Exceptions.FaltaInfoException;
 import co.edu.utp.isc.gia.proyectoCrud.Exceptions.NoExisteException;
 import co.edu.utp.isc.gia.proyectoCrud.Repository.PersonalRepository;
 import co.edu.utp.isc.gia.proyectoCrud.Service.PersonalService;
@@ -18,22 +17,17 @@ import java.util.Optional;
 public class PersonalServiceImpl implements PersonalService {
 
     @Autowired
-    private PersonalRepository personalRepository;
+    public PersonalRepository personalRepository;
 
     @Autowired
-    private ModelMapper modelMapper;
-
+    public ModelMapper modelMapper;
 
     @Override
-    public PersonalDTO crearPersonal(PersonalDTO personalDTO) throws FaltaInfoException {
-        if(!personalDTO.equals(null) && personalDTO!=null){
-            PersonalEntity personalEntity = this.personalRepository.save(modelMapper.map(personalDTO,
-                                                                                PersonalEntity.class));
+    public PersonalDTO crearPersonal(PersonalDTO personalDTO) {
 
-            return modelMapper.map(personalEntity, PersonalDTO.class);
-        } else {
-            throw new FaltaInfoException("Falta información para crear el registro de personal");
-        }
+        PersonalEntity personalEntity = this.personalRepository.save(modelMapper.map(personalDTO,
+                                                                                PersonalEntity.class));
+        return modelMapper.map(personalEntity, PersonalDTO.class);
     }
 
     @Override
@@ -41,8 +35,7 @@ public class PersonalServiceImpl implements PersonalService {
         if(personalRepository.existsById(cedulaPersonal)){
             Optional<PersonalEntity> personalEntity = personalRepository.findById(cedulaPersonal);
 
-            PersonalDTO personalDTO = modelMapper.map(personalEntity.get(), PersonalDTO.class);
-            return personalDTO;
+            return modelMapper.map(personalEntity.get(), PersonalDTO.class);
         } else {
             throw new NoExisteException("No existe personal registrado con esa cédula");
         }
@@ -66,17 +59,13 @@ public class PersonalServiceImpl implements PersonalService {
     }
 
     @Override
-    public PersonalDTO actualizarPersonal(PersonalDTO personalDTO) throws NoExisteException, FaltaInfoException {
-        if(!personalDTO.equals(null) && personalDTO != null){
-            if(personalRepository.existsById(personalDTO.getCedulaPersonal())){
-                PersonalEntity personalEntity = personalRepository.save(modelMapper.map(personalDTO, PersonalEntity.class));
+    public PersonalDTO actualizarPersonal(PersonalDTO personalDTO) throws NoExisteException {
+        if(personalRepository.existsById(personalDTO.getCedulaPersonal())){
+            PersonalEntity personalEntity = personalRepository.save(modelMapper.map(personalDTO, PersonalEntity.class));
 
-                return modelMapper.map(personalEntity, PersonalDTO.class);
-            } else {
-                throw new NoExisteException("No existe personal registrado con esa cédula");
-            }
+            return modelMapper.map(personalEntity, PersonalDTO.class);
         } else {
-            throw new FaltaInfoException("Falta información para crear el registro de personal");
+            throw new NoExisteException("No existe personal registrado con esa cédula");
         }
     }
 

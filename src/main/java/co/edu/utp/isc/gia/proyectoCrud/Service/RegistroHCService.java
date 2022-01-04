@@ -8,7 +8,7 @@ import java.util.Date;
 import java.util.List;
 
 public interface RegistroHCService {
-    RegistroHCDTO crearRegistro(RegistroHCDTO registroHCDTO) throws FaltaInfoException;
+    RegistroHCDTO crearRegistro(RegistroHCDTO registroHCDTO) throws NoExisteException;
 
     List<RegistroHCDTO> consultarPorFecha(Date fecha) throws NoExisteException;
 
@@ -16,7 +16,7 @@ public interface RegistroHCService {
 
     List<RegistroHCDTO> consultarPorPersonal(Long cedulaPersonal) throws NoExisteException;
 
-    RegistroHCDTO actualizarRegistro(RegistroHCDTO registroHCDTO) throws NoExisteException, FaltaInfoException;
+    RegistroHCDTO actualizarRegistro(RegistroHCDTO registroHCDTO) throws NoExisteException;
 
     void borrarRegistro(Long codRegistro) throws NoExisteException;
 

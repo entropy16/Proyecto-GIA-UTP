@@ -1,10 +1,12 @@
 package co.edu.utp.isc.gia.proyectoCrud.Service.Impl;
 
+import co.edu.utp.isc.gia.proyectoCrud.DTO.PacienteDTO;
 import co.edu.utp.isc.gia.proyectoCrud.DTO.RegistroHCDTO;
 import co.edu.utp.isc.gia.proyectoCrud.Entities.RegistroHCEntity;
-import co.edu.utp.isc.gia.proyectoCrud.Exceptions.FaltaInfoException;
 import co.edu.utp.isc.gia.proyectoCrud.Exceptions.NoExisteException;
+import co.edu.utp.isc.gia.proyectoCrud.Repository.PacienteRepository;
 import co.edu.utp.isc.gia.proyectoCrud.Repository.RegistroHCRepository;
+import co.edu.utp.isc.gia.proyectoCrud.Service.PacienteService;
 import co.edu.utp.isc.gia.proyectoCrud.Service.RegistroHCService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,18 +23,29 @@ public class RegistroHCServiceImpl implements RegistroHCService {
     public RegistroHCRepository registroHCRepository;
 
     @Autowired
+    public PacienteService pacienteService;
+
+    @Autowired
+    public PacienteRepository pacienteRepository;
+
+    @Autowired
     public ModelMapper modelMapper;
 
     @Override
-    public RegistroHCDTO crearRegistro(RegistroHCDTO registroHCDTO) throws FaltaInfoException {
-        if(!registroHCDTO.equals(null) && registroHCDTO != null) {
-            RegistroHCEntity registroHCEntity = registroHCRepository.save(modelMapper.map(registroHCDTO,
-                                                                                    RegistroHCEntity.class));
+    public RegistroHCDTO crearRegistro(RegistroHCDTO registroHCDTO) throws NoExisteException {
 
-            return modelMapper.map(registroHCEntity, RegistroHCDTO.class);
-        } else {
-            throw new FaltaInfoException("Falta información para crear el registro");
+        RegistroHCEntity registroHCEntity = registroHCRepository.save(modelMapper.map(registroHCDTO,
+                                                                                    RegistroHCEntity.class));
+        PacienteDTO pacienteDTO = modelMapper.map(pacienteRepository.findById(
+                                            registroHCEntity.getCedulaPaciente()).get(), PacienteDTO.class);
+
+        if(pacienteDTO.getEstado().equals( registroHCEntity.getEstadoPaciente() )) {
+            pacienteDTO.setEstado(registroHCEntity.getEstadoPaciente());
+
+            pacienteService.actualizarPaciente(pacienteDTO);
         }
+
+        return modelMapper.map(registroHCEntity, RegistroHCDTO.class);
     }
 
     @Override
@@ -87,17 +100,22 @@ public class RegistroHCServiceImpl implements RegistroHCService {
     }
 
     @Override
-    public RegistroHCDTO actualizarRegistro(RegistroHCDTO registroHCDTO) throws NoExisteException, FaltaInfoException {
-        if (!registroHCDTO.equals(null) && registroHCDTO != null){
-            if(registroHCRepository.existsById(registroHCDTO.getCodRegistro())){
-                RegistroHCEntity registroHCEntity = modelMapper.map(registroHCDTO, RegistroHCEntity.class);
+    public RegistroHCDTO actualizarRegistro(RegistroHCDTO registroHCDTO) throws NoExisteException {
+        if(registroHCRepository.existsById(registroHCDTO.getCodRegistro())){
+            RegistroHCEntity registroHCEntity = modelMapper.map(registroHCDTO, RegistroHCEntity.class);
 
-                return modelMapper.map(registroHCRepository.save(registroHCEntity), RegistroHCDTO.class);
-            } else {
-                throw new NoExisteException("No existe el registro que desea actualizar");
+            PacienteDTO pacienteDTO = modelMapper.map(pacienteRepository.findById(
+                    registroHCEntity.getCedulaPaciente()).get(), PacienteDTO.class);
+
+            if(pacienteDTO.getEstado().equals( registroHCEntity.getEstadoPaciente() )) {
+                pacienteDTO.setEstado(registroHCEntity.getEstadoPaciente());
+
+                pacienteService.actualizarPaciente(pacienteDTO);
             }
+
+            return modelMapper.map(registroHCRepository.save(registroHCEntity), RegistroHCDTO.class);
         } else {
-            throw new FaltaInfoException("Falta información para actualizar el registro");
+            throw new NoExisteException("No existe el registro que desea actualizar");
         }
     }
 

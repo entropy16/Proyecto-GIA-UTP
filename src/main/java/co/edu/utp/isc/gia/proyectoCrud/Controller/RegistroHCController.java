@@ -1,7 +1,6 @@
 package co.edu.utp.isc.gia.proyectoCrud.Controller;
 
 import co.edu.utp.isc.gia.proyectoCrud.DTO.RegistroHCDTO;
-import co.edu.utp.isc.gia.proyectoCrud.Exceptions.FaltaInfoException;
 import co.edu.utp.isc.gia.proyectoCrud.Exceptions.NoExisteException;
 import co.edu.utp.isc.gia.proyectoCrud.Service.RegistroHCService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +17,7 @@ public class RegistroHCController {
     public RegistroHCService registroHCService;
 
     @PostMapping("crearRegistro")
-    public RegistroHCDTO crearRegistro(@RequestBody RegistroHCDTO registroHCDTO) throws FaltaInfoException {
+    public RegistroHCDTO crearRegistro(@RequestBody RegistroHCDTO registroHCDTO) throws NoExisteException {
         return registroHCService.crearRegistro(registroHCDTO);
     }
 
@@ -39,7 +38,7 @@ public class RegistroHCController {
 
     @PutMapping("actualizarRegistro")
     public RegistroHCDTO actualizarRegistro(@RequestBody RegistroHCDTO registroHCDTO)
-            throws NoExisteException, FaltaInfoException {
+            throws NoExisteException {
         return registroHCService.actualizarRegistro(registroHCDTO);
     }
 
